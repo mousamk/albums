@@ -3,7 +3,7 @@ package pro.mousa.albums.di.component
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
-import pro.mousa.albums.data.ui.BaseActivity
+import pro.mousa.albums.ui.base.BaseActivity
 import pro.mousa.albums.di.module.ApplicationModule
 
 

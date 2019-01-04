@@ -1,7 +1,8 @@
-package pro.mousa.albums
+package pro.mousa.albums.ui.main
 
 import android.os.Bundle
-import pro.mousa.albums.data.ui.BaseActivity
+import pro.mousa.albums.R
+import pro.mousa.albums.ui.base.BaseActivity
 
 
 class MainActivity : BaseActivity()

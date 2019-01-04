@@ -1,4 +1,4 @@
-package pro.mousa.albums.data.ui
+package pro.mousa.albums.ui.base
 
 import android.app.Activity
 
