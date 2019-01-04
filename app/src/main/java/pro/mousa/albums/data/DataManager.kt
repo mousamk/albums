@@ -8,5 +8,5 @@ import pro.mousa.albums.data.model.Photo
 interface DataManager
 {
     fun getAlbums(): Single<List<Album>>
-    fun getAlbumPhotos(): Single<List<Photo>>
+    fun getAlbumPhotos(albumId: Long): Single<List<Photo>>
 }
