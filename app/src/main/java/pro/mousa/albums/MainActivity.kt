@@ -1,10 +1,10 @@
 package pro.mousa.albums
 
-import android.app.Activity
 import android.os.Bundle
+import pro.mousa.albums.data.ui.BaseActivity
 
 
-class MainActivity : Activity()
+class MainActivity : BaseActivity()
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {
