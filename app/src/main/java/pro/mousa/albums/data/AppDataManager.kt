@@ -33,7 +33,7 @@ class AppDataManager @Inject constructor(private val dbHelper: DbHelper,
             apiHelper.getAlbums().flatMap {
                 apiHelper.getPhotos().flatMap { Single.just(true) }
             }
-        }.subscribeOn(sche)
+        }
     }
 
     override fun isLocalDataAvailable(): Boolean
