@@ -7,8 +7,10 @@ import dagger.android.AndroidInjectionModule
 import pro.mousa.albums.App
 import pro.mousa.albums.di.builder.ActivityBuilder
 import pro.mousa.albums.di.module.ApplicationModule
+import javax.inject.Singleton
 
 
+@Singleton
 @Component(modules = [AndroidInjectionModule::class, ApplicationModule::class, ActivityBuilder::class])
 interface ApplicationComponent
 {
