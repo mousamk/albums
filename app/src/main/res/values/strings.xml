@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Albums</string>
-    <string name="empty_note">There are no albums!</string>
+    <string name="empty_albums_note">There are no albums!</string>
+    <string name="empty_photos_note">There are no photos in this album!</string>
+
+    <!-- Codes -->
+    <item name="tag_viewholder" type="id"/>
 </resources>

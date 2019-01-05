@@ -4,10 +4,11 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmModel
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
+import java.io.Serializable
 
 
 @RealmClass
-open class Photo : RealmModel
+open class Photo : RealmModel, Serializable
 {
     //These real fields store the real data. They need to be mutable because of Realm:
     @PrimaryKey

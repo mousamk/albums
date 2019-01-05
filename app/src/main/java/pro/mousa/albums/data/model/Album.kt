@@ -5,10 +5,11 @@ import io.realm.RealmModel
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
+import java.io.Serializable
 
 
 @RealmClass
-open class Album : RealmModel
+open class Album : RealmModel, Serializable
 {
     //These real fields store the real data. They need to be mutable because of Realm:
     @PrimaryKey
@@ -26,5 +27,5 @@ open class Album : RealmModel
 
     //These attributes will be linked for ease of access:
     @Ignore var user: User? = null
-    @Ignore var photos: List<Photo>? = null
+    @Ignore var photos: ArrayList<Photo>? = null
 }

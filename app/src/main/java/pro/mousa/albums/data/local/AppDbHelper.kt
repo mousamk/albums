@@ -78,7 +78,9 @@ class AppDbHelper @Inject constructor(application: Application) : DbHelper
                     val user = realm.where(User::class.java).equalTo(User.FIELD_ID, album.userId).findFirst()
                     album.user = realm.copyFromRealm(user)
                     val photos = realm.where(Photo::class.java).equalTo(Photo.FIELD_ALBUM_ID, album.id).findAll()
-                    album.photos = realm.copyFromRealm(photos)
+                    val photosArrayList = ArrayList<Photo>(photos.size)
+                    photosArrayList.addAll(realm.copyFromRealm(photos))
+                    album.photos = photosArrayList
                 }
                 albums
             }
