@@ -15,10 +15,12 @@ abstract class BaseActivity<out B : ViewDataBinding, out V : BaseViewModel<out B
     : AppCompatActivity(), BaseFragment.Callback
 {
     private var viewModelBack: V? = null
-    private lateinit var viewDataBinding: B
+    private lateinit var viewDataBindingBack: B
     abstract val viewModel: V
     abstract val layoutId: Int
     abstract val bindingVariable: Int
+
+    protected val viewDataBinding: B get() = viewDataBindingBack
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -35,10 +37,10 @@ abstract class BaseActivity<out B : ViewDataBinding, out V : BaseViewModel<out B
 
     private fun performDataBinding()
     {
-        viewDataBinding = DataBindingUtil.setContentView(this, layoutId)
+        viewDataBindingBack = DataBindingUtil.setContentView(this, layoutId)
         if (viewModelBack == null) viewModelBack = viewModel
-        viewDataBinding.setVariable(bindingVariable, viewModelBack)
-        viewDataBinding.executePendingBindings()
+        viewDataBindingBack.setVariable(bindingVariable, viewModelBack)
+        viewDataBindingBack.executePendingBindings()
     }
 
     override fun onFragmentAttached() {}
