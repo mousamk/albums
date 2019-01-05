@@ -6,8 +6,7 @@ import pro.mousa.albums.ui.base.BaseViewModel
 import pro.mousa.albums.utils.rx.SchedulerProvider
 
 
-class SplashViewModel(dataManager: DataManager,
-                      schedulerProvider: SchedulerProvider)
+class SplashViewModel(dataManager: DataManager, schedulerProvider: SchedulerProvider)
     : BaseViewModel<SplashNavigator>(dataManager, schedulerProvider)
 {
     fun startDownloading()
