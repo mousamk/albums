@@ -34,6 +34,7 @@ class AlbumAdapter(context: Context,
         holder.albumNameView.text = album.title
         holder.userNameView.text = album.user?.name ?: "User ID ${album.userId}"
         setPhotos(holder, album)
+        holder.itemView.setOnClickListener { albumClickHandler(album) }
     }
 
     private fun setPhotos(holder: AlbumViewHolder, album: Album)

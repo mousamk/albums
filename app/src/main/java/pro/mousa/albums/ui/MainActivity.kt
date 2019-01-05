@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import pro.mousa.albums.R
 import pro.mousa.albums.data.model.Album
 
@@ -31,7 +32,7 @@ class MainActivity : BaseActivity(), AlbumsFragment.InteractionListener
 
     override fun onAlbumClick(album: Album)
     {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, "Album ${album.title} is clicked!", Toast.LENGTH_SHORT).show()
     }
 
 
