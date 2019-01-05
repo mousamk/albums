@@ -26,4 +26,18 @@ class AppDataManager @Inject constructor(private val dbHelper: DbHelper,
             else apiHelper.getPhotos().blockingGet().filter { it.albumId == albumId }
         }
     }
+
+    override fun downloadIfRequired(): Single<Boolean>
+    {
+        val download = true     //TODO: Set real value.
+        return if (download) {
+            apiHelper.getUsers().flatMap {
+                apiHelper.getAlbums().flatMap {
+                    apiHelper.getPhotos().flatMap { Single.just(true) }
+                }
+            }
+        }
+        else
+            Single.just(true)
+    }
 }

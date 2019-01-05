@@ -8,6 +8,8 @@ import pro.mousa.albums.data.local.AppDbHelper
 import pro.mousa.albums.data.local.DbHelper
 import pro.mousa.albums.data.remote.ApiHelper
 import pro.mousa.albums.data.remote.AppApiHelper
+import pro.mousa.albums.utils.rx.AppSchedulerProvider
+import pro.mousa.albums.utils.rx.SchedulerProvider
 import javax.inject.Singleton
 
 
@@ -25,4 +27,7 @@ class ApplicationModule
     @Provides
     @Singleton
     fun provideDataManager(appDataManager: AppDataManager): DataManager = appDataManager
+
+    @Provides
+    fun provideSchedulerProviders(): SchedulerProvider = AppSchedulerProvider()
 }

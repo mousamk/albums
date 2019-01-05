@@ -34,6 +34,7 @@ class AppDbHelper @Inject constructor(application: Application) : DbHelper
                 realm.where(Album::class.java).findAll().deleteAllFromRealm()
                 realm.copyToRealm(albums)
                 realm.commitTransaction()
+                Log.i(TAG, "Saved ${albums.size} albums.")
                 true
             }
         }
@@ -47,6 +48,7 @@ class AppDbHelper @Inject constructor(application: Application) : DbHelper
                 realm.where(Photo::class.java).findAll().deleteAllFromRealm()
                 realm.copyToRealm(photos)
                 realm.commitTransaction()
+                Log.i(TAG, "Saved ${photos.size} photos.")
                 true
             }
         }
@@ -60,6 +62,7 @@ class AppDbHelper @Inject constructor(application: Application) : DbHelper
                 realm.where(User::class.java).findAll().deleteAllFromRealm()
                 realm.copyToRealm(users)
                 realm.commitTransaction()
+                Log.i(TAG, "Saved ${users.size} users.")
                 true
             }
         }
