@@ -1,5 +1,6 @@
 package pro.mousa.albums.data.remote
 
+import android.util.Log
 import io.reactivex.Single
 import pro.mousa.albums.Config
 import pro.mousa.albums.data.local.DbHelper
@@ -29,6 +30,7 @@ class AppApiHelper @Inject constructor(private val dbHelper: DbHelper) : ApiHelp
     override fun getAlbums(): Single<List<Album>>
     {
         return apiService.getAlbums().map { albums ->
+            Log.i(TAG, "Downloaded ${albums.size} albums.")
             dbHelper.saveAlbums(albums)
             albums
         }
@@ -37,6 +39,7 @@ class AppApiHelper @Inject constructor(private val dbHelper: DbHelper) : ApiHelp
     override fun getPhotos(): Single<List<Photo>>
     {
         return apiService.getPhotos().map { photos ->
+            Log.i(TAG, "Downloaded ${photos.size} photos.")
             dbHelper.savePhotos(photos)
             photos
         }
@@ -45,8 +48,15 @@ class AppApiHelper @Inject constructor(private val dbHelper: DbHelper) : ApiHelp
     override fun getUsers(): Single<List<User>>
     {
         return apiService.getUsers().map { users ->
+            Log.i(TAG, "Downloaded ${users.size} users.")
             dbHelper.saveUsers(users)
             users
         }
+    }
+
+
+    companion object
+    {
+        private val TAG: String = AppApiHelper::class.java.simpleName
     }
 }
