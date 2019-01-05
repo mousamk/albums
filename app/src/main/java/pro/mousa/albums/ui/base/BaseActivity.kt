@@ -11,14 +11,14 @@ import dagger.android.AndroidInjection
  * This is the base class for activities in this application. It exists to hold the shared
  * properties and also provide a common class for dependencies to hook on.
  */
-abstract class BaseActivity<out B : ViewDataBinding, out V : BaseViewModel<out BaseNavigator>> : AppCompatActivity()
+abstract class BaseActivity<out B : ViewDataBinding, out V : BaseViewModel<out BaseNavigator>>
+    : AppCompatActivity(), BaseFragment.Callback
 {
-    abstract val layoutId: Int
     private var viewModelBack: V? = null
-    private lateinit var viewDataBindingBack: B
+    private lateinit var viewDataBinding: B
     abstract val viewModel: V
+    abstract val layoutId: Int
     abstract val bindingVariable: Int
-    val viewDataBinding: B get() = viewDataBindingBack
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -35,9 +35,13 @@ abstract class BaseActivity<out B : ViewDataBinding, out V : BaseViewModel<out B
 
     private fun performDataBinding()
     {
-        viewDataBindingBack = DataBindingUtil.setContentView(this, layoutId)
+        viewDataBinding = DataBindingUtil.setContentView(this, layoutId)
         if (viewModelBack == null) viewModelBack = viewModel
-        viewDataBindingBack.setVariable(bindingVariable, viewModelBack)
-        viewDataBindingBack.executePendingBindings()
+        viewDataBinding.setVariable(bindingVariable, viewModelBack)
+        viewDataBinding.executePendingBindings()
     }
+
+    override fun onFragmentAttached() {}
+
+    override fun onFragmentDetached(tag: String) {}
 }
