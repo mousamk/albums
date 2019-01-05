@@ -2,26 +2,29 @@ package pro.mousa.albums
 
 import android.app.Activity
 import android.app.Application
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import pro.mousa.albums.di.component.ApplicationComponent
 import pro.mousa.albums.di.component.DaggerApplicationComponent
+import pro.mousa.albums.di.module.ApplicationModule
 import javax.inject.Inject
 
 
-class App : Application(), HasActivityInjector
+class App : Application()
 {
-    @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    private lateinit var applicationComponent: ApplicationComponent
+    val component: ApplicationComponent get() = applicationComponent
 
-
-    override fun activityInjector() = activityDispatchingAndroidInjector
 
     override fun onCreate()
     {
         super.onCreate()
-        DaggerApplicationComponent.builder()
-            .application(this)
-            .build()
-            .inject(this)
+        prepareApplicationComponent()
     }
+
+    private fun prepareApplicationComponent()
+    {
+        applicationComponent = DaggerApplicationComponent.builder()
+            .applicationModule(ApplicationModule(this))
+            .build()
+    }
+
 }
