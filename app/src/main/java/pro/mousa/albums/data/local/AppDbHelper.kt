@@ -98,6 +98,27 @@ class AppDbHelper @Inject constructor(application: Application) : DbHelper
         }
     }
 
+    override fun countAlbums(): Long
+    {
+        return runTransaction { realm ->
+            realm.where(Album::class.java).count()
+        }
+    }
+
+    override fun countPhotos(): Long
+    {
+        return runTransaction { realm ->
+            realm.where(Photo::class.java).count()
+        }
+    }
+
+    override fun countUsers(): Long
+    {
+        return runTransaction { realm ->
+            realm.where(User::class.java).count()
+        }
+    }
+
     private fun<T> runTransaction(runnable: (Realm)->T): T
     {
         val realm = getRealm()
