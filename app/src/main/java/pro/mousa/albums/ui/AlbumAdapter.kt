@@ -17,7 +17,7 @@ class AlbumAdapter(context: Context,
                    private val albumClickHandler: (Album)->Unit)
     : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>()
 {
-    private val layoutInflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val layoutInflater = LayoutInflater.from(context)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): AlbumViewHolder
@@ -44,7 +44,7 @@ class AlbumAdapter(context: Context,
                 Picasso.get()
                     .load(photos[0].thumbnailUrl)
                     .error(R.drawable.placeholder).placeholder(R.drawable.placeholder)
-                    .fit().centerCrop()
+                    .fit().centerInside()
                     .into(holder.previewImageView1)
             }
             if (photos.size > 1) {
@@ -52,7 +52,7 @@ class AlbumAdapter(context: Context,
                 Picasso.get()
                     .load(photos[1].thumbnailUrl)
                     .error(R.drawable.placeholder).placeholder(R.drawable.placeholder)
-                    .fit().centerCrop()
+                    .fit().centerInside()
                     .into(holder.previewImageView2)
             }
             else
@@ -62,7 +62,7 @@ class AlbumAdapter(context: Context,
                 Picasso.get()
                     .load(photos[2].thumbnailUrl)
                     .error(R.drawable.placeholder).placeholder(R.drawable.placeholder)
-                    .fit().centerCrop()
+                    .fit().centerInside()
                     .into(holder.previewImageView3)
             }
             else

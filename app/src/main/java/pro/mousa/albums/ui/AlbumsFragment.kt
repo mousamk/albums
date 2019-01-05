@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.fragment_albums.*
 
 class AlbumsFragment : BaseFragment()
 {
-    private var albumAdapter: AlbumAdapter? = null
     private lateinit var albums: List<Album>
     private var interactionListener: InteractionListener? = null
 
@@ -70,7 +69,7 @@ class AlbumsFragment : BaseFragment()
 
     private fun showAlbumsList()
     {
-        albumAdapter = AlbumAdapter(context!!, albums) { interactionListener?.onAlbumClick(it) }
+        val albumAdapter = AlbumAdapter(context!!, albums) { interactionListener?.onAlbumClick(it) }
         albumsRecyclerView?.layoutManager = LinearLayoutManager(context)
         albumsRecyclerView.adapter = albumAdapter
     }

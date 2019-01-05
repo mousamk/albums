@@ -7,9 +7,12 @@ import android.util.Log
 import android.widget.Toast
 import pro.mousa.albums.R
 import pro.mousa.albums.data.model.Album
+import pro.mousa.albums.data.model.Photo
 
 
-class MainActivity : BaseActivity(), AlbumsFragment.InteractionListener
+class MainActivity : BaseActivity(),
+                     AlbumsFragment.InteractionListener,
+                     PhotosFragment.InteractionListener
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -27,12 +30,28 @@ class MainActivity : BaseActivity(), AlbumsFragment.InteractionListener
             .beginTransaction()
             .replace(R.id.main_fragment_holder, fragment)
             .commit()
-        Log.d(TAG, "Added albums fragment!")
+        Log.d(TAG, "Added albums fragment.")
+    }
+
+    private fun showPhotosFragment(album: Album)
+    {
+        val fragment = PhotosFragment.newInstance(album)
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.main_fragment_holder, fragment)
+            .addToBackStack(null)
+            .commit()
+        Log.d(TAG, "Added photos fragment.")
     }
 
     override fun onAlbumClick(album: Album)
     {
-        Toast.makeText(this, "Album ${album.title} is clicked!", Toast.LENGTH_SHORT).show()
+        showPhotosFragment(album)
+    }
+
+    override fun onPhotoClick(photo: Photo)
+    {
+        Toast.makeText(this, "Photo [${photo.title}] is clicked!", Toast.LENGTH_SHORT).show()
     }
 
 
