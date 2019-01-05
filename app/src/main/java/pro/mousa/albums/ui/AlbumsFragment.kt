@@ -49,13 +49,16 @@ class AlbumsFragment : BaseFragment()
 
     private fun loadData()
     {
-        val disposable = dataManager.getAlbums().subscribe { albums: List<Album> ->
-            this@AlbumsFragment.albums = albums
-            if (albums.isEmpty())
-                showEmptyNote()
-            else
-                showAlbumsList()
-        }
+        val disposable = dataManager.getAlbums().subscribe(
+            { albums: List<Album> ->
+                hideLoading()
+                this@AlbumsFragment.albums = albums
+                if (albums.isEmpty())
+                    showEmptyNote()
+                else
+                    showAlbumsList()
+            },
+            { hideLoading() })
         disposables.add(disposable)
     }
 
@@ -70,6 +73,11 @@ class AlbumsFragment : BaseFragment()
         albumAdapter = AlbumAdapter(context!!, albums) { interactionListener?.onAlbumClick(it) }
         albumsRecyclerView?.layoutManager = LinearLayoutManager(context)
         albumsRecyclerView.adapter = albumAdapter
+    }
+
+    private fun hideLoading()
+    {
+        loadingView?.visibility = View.GONE
     }
 
 

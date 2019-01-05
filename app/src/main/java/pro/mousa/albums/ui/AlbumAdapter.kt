@@ -32,10 +32,10 @@ class AlbumAdapter(context: Context,
     {
         val album = albums[position]
         holder.albumNameView.text = album.title
-        holder.userNameView.text = album.userId.toString()  //TODO
+        holder.userNameView.text = album.user?.name ?: "User ID ${album.userId}"
         holder.previewImageView
         Picasso.get()
-            .load("image address!")     //TODO
+            .load(album.photos?.get(0)?.thumbnailUrl)
             .error(R.drawable.placeholder).placeholder(R.drawable.placeholder)
             .fit().centerCrop()
             .into(holder.previewImageView)
