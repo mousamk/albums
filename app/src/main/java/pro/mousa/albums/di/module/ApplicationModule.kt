@@ -13,7 +13,6 @@ import pro.mousa.albums.utils.rx.SchedulerProvider
 import javax.inject.Singleton
 
 
-//TODO: I think this needs to be removed!
 @Module
 class ApplicationModule
 {
