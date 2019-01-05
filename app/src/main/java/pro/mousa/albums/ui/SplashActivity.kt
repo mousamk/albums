@@ -2,8 +2,12 @@ package pro.mousa.albums.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import pro.mousa.albums.R
+
+import kotlinx.android.synthetic.main.activity_splash.*
+import java.util.concurrent.TimeUnit
 
 
 class SplashActivity : BaseActivity()
@@ -17,13 +21,21 @@ class SplashActivity : BaseActivity()
 
     private fun downloadData()
     {
-        val disposable = dataManager.downloadIfRequired().subscribe({
-            gotoMainActivity()
-        }, {
-            Log.e(TAG, "An error happened checking data: ${it.message}")
-            Toast.makeText(this, "Couldn't download data!", Toast.LENGTH_LONG).show()
-            //TODO: ...
-        })
+        val disposable = dataManager.downloadData()
+            .delay(1000, TimeUnit.MILLISECONDS, schedulerProvider.ui(), true)
+            .subscribe(
+                { gotoMainActivity() },
+                { tr ->
+                    Log.e(TAG, "An error happened checking data: ${tr.message}")
+                    if (dataManager.isLocalDataAvailable()) {
+                        Toast.makeText(this, "Download problem! Showing offline data.", Toast.LENGTH_LONG).show()
+                        gotoMainActivity()
+                    }
+                    else {
+                        Toast.makeText(this, "Error downloading data! Please retry later.", Toast.LENGTH_LONG).show()
+                        loading_spinner.visibility = View.INVISIBLE
+                    }
+                })
         disposables.add(disposable)
     }
 

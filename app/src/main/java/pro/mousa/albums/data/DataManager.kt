@@ -9,5 +9,6 @@ interface DataManager
 {
     fun getAlbums(): Single<List<Album>>
     fun getAlbumPhotos(albumId: Long): Single<List<Photo>>
-    fun downloadIfRequired(): Single<Boolean>
+    fun downloadData(): Single<Boolean>
+    fun isLocalDataAvailable(): Boolean
 }
