@@ -7,28 +7,22 @@ import io.realm.annotations.RealmClass
 
 
 @RealmClass
-class User : RealmModel
+open class User : RealmModel
 {
-    //NOTE: Gson can modify `val`s. So I'm defining all attributes as `val`s.
+    //These real fields store the real data. They need to be mutable because of Realm:
     @PrimaryKey
-    val id: Long = 0L
-    val name: String = ""
-    val username: String = ""
-    val email: String = ""
-    @SerializedName("address")
-    private lateinit var addressBack: Address
-    val phone: String = ""
-    val website: String = ""
-    @SerializedName("company")
-    private lateinit var companyBack: Company
+    @SerializedName("id")
+    private var idBack: Long = 0L
+    @SerializedName("name")
+    private var nameBack: String = ""
 
-    //These are to expose immutable objects instead of the mutable original ones:
-    val address: Address get() = addressBack
-    val company: Company get() = companyBack
+    //These virtual attributes exist to provide an immutable interface:
+    val id: Long get() = idBack
+    val name: String get() = nameBack
 
 
     companion object
     {
-        val FIELD_ID = "id"     //NOTE: Keep this equal to the field name!
+        const val FIELD_ID = "id"     //NOTE: Keep this equal to the field name!
     }
 }
