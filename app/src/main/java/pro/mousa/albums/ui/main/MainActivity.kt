@@ -15,9 +15,9 @@ import pro.mousa.albums.ui.base.BaseActivity
 import javax.inject.Inject
 
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNavigator//, HasSupportFragmentInjector
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNavigator, HasSupportFragmentInjector
 {
-//    @Inject internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    @Inject internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     @Inject internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private var mainViewModel: MainViewModel? = null
@@ -37,7 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
         get() = BR.viewModel
 
 
-//    override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
+    override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
