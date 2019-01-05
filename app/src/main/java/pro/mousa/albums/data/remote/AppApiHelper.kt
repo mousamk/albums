@@ -31,29 +31,26 @@ class AppApiHelper @Inject constructor(private val dbHelper: DbHelper,
 
     override fun getAlbums(): Single<List<Album>>
     {
-        return apiService.getAlbums().map { albums ->
-            Log.i(TAG, "Downloaded ${albums.size} albums.")
-            dbHelper.saveAlbums(albums)
-            albums
-        }.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
+        return apiService.getAlbums()
+            .map { Log.i(TAG, "Downloaded ${it.size} albums."); it }
+            .map { dbHelper.saveAlbums(it).subscribe(); it }
+            .subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
     }
 
     override fun getPhotos(): Single<List<Photo>>
     {
-        return apiService.getPhotos().map { photos ->
-            Log.i(TAG, "Downloaded ${photos.size} photos.")
-            dbHelper.savePhotos(photos)
-            photos
-        }.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
+        return apiService.getPhotos()
+            .map { Log.i(TAG, "Downloaded ${it.size} photos."); it }
+            .map { dbHelper.savePhotos(it).subscribe(); it }
+            .subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
     }
 
     override fun getUsers(): Single<List<User>>
     {
-        return apiService.getUsers().map { users ->
-            Log.i(TAG, "Downloaded ${users.size} users.")
-            dbHelper.saveUsers(users)
-            users
-        }.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
+        return apiService.getUsers()
+            .map { Log.i(TAG, "Downloaded ${it.size} users."); it }
+            .map { dbHelper.saveUsers(it).subscribe(); it }
+            .subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
     }
 
 

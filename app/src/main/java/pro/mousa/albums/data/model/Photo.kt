@@ -32,6 +32,6 @@ open class Photo : RealmModel
 
     companion object
     {
-        const val FIELD_ALBUM_ID = "albumId"  //NOTE: Keep this equal to the field name!
+        const val FIELD_ALBUM_ID = "albumIdBack"  //NOTE: Keep this equal to the field name!
     }
 }

@@ -15,4 +15,8 @@ interface DbHelper
     fun loadAlbums(): Single<List<Album>>
     fun loadPhotosByAlbum(albumId: Long): Single<List<Photo>>
     fun loadUserById(userId: Long): Single<User>
+
+    fun countAlbums(): Long
+    fun countPhotos(): Long
+    fun countUsers(): Long
 }

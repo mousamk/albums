@@ -2,6 +2,7 @@ package pro.mousa.albums.data.model
 
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmModel
+import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 
@@ -22,4 +23,8 @@ open class Album : RealmModel
     val id: Long get() = idBack
     val userId: Long get() = userIdBack
     val title: String get() = titleBack
+
+    //These attributes will be linked for ease of access:
+    @Ignore var user: User? = null
+    @Ignore var photos: List<Photo>? = null
 }
