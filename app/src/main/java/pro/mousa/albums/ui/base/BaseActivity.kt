@@ -1,6 +1,5 @@
 package pro.mousa.albums.ui.base
 
-import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
@@ -39,6 +38,6 @@ abstract class BaseActivity<out B : ViewDataBinding, out V : BaseViewModel<out B
         viewDataBindingBack = DataBindingUtil.setContentView(this, layoutId)
         if (viewModelBack == null) viewModelBack = viewModel
         viewDataBindingBack.setVariable(bindingVariable, viewModelBack)
-        viewDataBindingBack.executePendingBindings();
+        viewDataBindingBack.executePendingBindings()
     }
 }
