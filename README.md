@@ -5,25 +5,25 @@ This is an app that I have created as a coding challenge. This application conne
 
 ## Splash
 
-![Splash screen](/result/splash.jpg "Splash screen")
+![Splash screen](/result/pics/splash.jpg "Splash screen")
 
 At first, splash screen is executed. It always tries to download the latest information. If downloading fails for any reason, it will show previously fetched offline data. If no previous data is available, it shows a message and doesn't go furtehr.
 
 
 ## Albums
 
-![Albums screen](/result/albums.jpg "Albums screen")
+![Albums screen](/result/pics/albums.jpg "Albums screen")
 
 In this page, a list of all existing albums are shown. For each album, a preview of its at most three pictures, its name and its owner's name are shown. Clicking on an album, will go to the album page.
 
 
 ## Photos
 
-![Photos screen](/blob/master/result/photos.jpg "Photos screen")
+![Photos screen](/blob/master/result/pics/photos.jpg "Photos screen")
 
 In this page, all of the photos of the selected album are being shown as thumbnails. Clicking on a photo, will enlarge it. Clicking again or pressing back key, will remove the enlarged picture.
 
-![Single photo screen](result/photo.jpg "Single photo screen")
+![Single photo screen](result/pics/photo.jpg "Single photo screen")
 
 
 # Download
