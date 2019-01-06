@@ -4,10 +4,11 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmModel
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
+import java.io.Serializable
 
 
 @RealmClass
-open class User : RealmModel
+open class User : RealmModel, Serializable
 {
     //These real fields store the real data. They need to be mutable because of Realm:
     @PrimaryKey
@@ -23,6 +24,6 @@ open class User : RealmModel
 
     companion object
     {
-        const val FIELD_ID = "id"     //NOTE: Keep this equal to the field name!
+        const val FIELD_ID = "idBack"     //NOTE: Keep this equal to the field name!
     }
 }

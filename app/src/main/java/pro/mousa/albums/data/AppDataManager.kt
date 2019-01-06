@@ -13,9 +13,9 @@ class AppDataManager @Inject constructor(private val dbHelper: DbHelper,
 {
     override fun getAlbums(): Single<List<Album>>
     {
-        return dbHelper.loadAlbums().map { albums ->
-            if (albums.isNotEmpty()) albums
-            else apiHelper.getAlbums().blockingGet()
+        return dbHelper.loadAlbums().flatMap { albums ->
+            if (albums.isNotEmpty()) Single.just(albums)
+            else apiHelper.getAlbums().flatMap { dbHelper.loadAlbums() }
         }
     }
 
@@ -27,17 +27,19 @@ class AppDataManager @Inject constructor(private val dbHelper: DbHelper,
         }
     }
 
-    override fun downloadIfRequired(): Single<Boolean>
+    override fun downloadData(): Single<Boolean>
     {
-        val download = true     //TODO: Set real value.
-        return if (download) {
-            apiHelper.getUsers().flatMap {
-                apiHelper.getAlbums().flatMap {
-                    apiHelper.getPhotos().flatMap { Single.just(true) }
-                }
-            }
-        }
-        else
-            Single.just(true)
+        return apiHelper.getUsers()
+            .flatMap { apiHelper.getAlbums() }
+            .flatMap { apiHelper.getPhotos() }
+            .flatMap { Single.just(true) }
+    }
+
+    override fun isLocalDataAvailable(): Boolean
+    {
+        return dbHelper.countAlbums() > 0 &&
+                dbHelper.countPhotos() > 0 &&
+                dbHelper.countUsers() > 0
     }
 }
+

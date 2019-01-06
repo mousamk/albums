@@ -72,8 +72,17 @@ class AppDbHelper @Inject constructor(application: Application) : DbHelper
     {
         return Single.fromCallable {
             runTransaction<List<Album>> { realm ->
-                val albums = realm.where(Album::class.java).findAll()
-                realm.copyFromRealm(albums)
+                val realmAlbums = realm.where(Album::class.java).findAll()
+                val albums = realm.copyFromRealm(realmAlbums)
+                albums.forEach { album ->
+                    val user = realm.where(User::class.java).equalTo(User.FIELD_ID, album.userId).findFirst()
+                    album.user = realm.copyFromRealm(user)
+                    val photos = realm.where(Photo::class.java).equalTo(Photo.FIELD_ALBUM_ID, album.id).findAll()
+                    val photosArrayList = ArrayList<Photo>(photos.size)
+                    photosArrayList.addAll(realm.copyFromRealm(photos))
+                    album.photos = photosArrayList
+                }
+                albums
             }
         }
     }
@@ -95,6 +104,27 @@ class AppDbHelper @Inject constructor(application: Application) : DbHelper
                 val user = realm.where(User::class.java).equalTo(User.FIELD_ID, userId).findFirst()
                 user?.let { realm.copyFromRealm(it) } ?: throw NotFoundException()
             }
+        }
+    }
+
+    override fun countAlbums(): Long
+    {
+        return runTransaction { realm ->
+            realm.where(Album::class.java).count()
+        }
+    }
+
+    override fun countPhotos(): Long
+    {
+        return runTransaction { realm ->
+            realm.where(Photo::class.java).count()
+        }
+    }
+
+    override fun countUsers(): Long
+    {
+        return runTransaction { realm ->
+            realm.where(User::class.java).count()
         }
     }
 

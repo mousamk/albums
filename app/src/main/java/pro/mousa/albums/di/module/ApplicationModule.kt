@@ -1,5 +1,6 @@
 package pro.mousa.albums.di.module
 
+import android.app.Application
 import dagger.Module
 import dagger.Provides
 import pro.mousa.albums.data.AppDataManager
@@ -14,7 +15,7 @@ import javax.inject.Singleton
 
 
 @Module
-class ApplicationModule
+class ApplicationModule(private val application: Application)
 {
     @Provides
     @Singleton
@@ -30,4 +31,7 @@ class ApplicationModule
 
     @Provides
     fun provideSchedulerProviders(): SchedulerProvider = AppSchedulerProvider()
+
+    @Provides
+    fun provideApplicaiton(): Application = application
 }
