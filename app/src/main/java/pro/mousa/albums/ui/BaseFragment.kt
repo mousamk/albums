@@ -25,4 +25,6 @@ abstract class BaseFragment : Fragment()
         super.onDestroy()
         disposables.dispose()
     }
+
+    open fun handleBackPress(): Boolean = false
 }

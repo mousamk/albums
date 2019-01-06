@@ -1,10 +1,11 @@
 package pro.mousa.albums.ui
 
-import android.content.Context
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import pro.mousa.albums.R
 import pro.mousa.albums.data.model.Album
 import pro.mousa.albums.data.model.Photo
@@ -15,26 +16,8 @@ import kotlinx.android.synthetic.main.fragment_photos.*
 class PhotosFragment : BaseFragment()
 {
     private lateinit var album: Album
+    private var currentImageShowing = false
 
-    private var interactionListener: InteractionListener? = null
-
-
-    override fun onAttach(context: Context?)
-    {
-        super.onAttach(context)
-        val candidates = arrayOf(parentFragment, targetFragment, getContext())
-        for (parent in candidates)
-            if (parent is InteractionListener) {
-                interactionListener = parent
-                return
-            }
-    }
-
-    override fun onDetach()
-    {
-        super.onDetach()
-        interactionListener = null
-    }
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -50,26 +33,94 @@ class PhotosFragment : BaseFragment()
     override fun onViewCreated(view: View, savedState: Bundle?)
     {
         super.onViewCreated(view, savedState)
-        showPhotos()
+        prepareViews()
+        showPhotosOrEmptyNote()
     }
 
-    private fun showPhotos()
+    private fun prepareViews()
+    {
+        currentImageView?.setOnClickListener { onCurrentPhotoClick() }
+    }
+
+    private fun showPhotosOrEmptyNote()
     {
         val photos = album.photos
-        if (photos?.isEmpty() == true) {
-            photosGridView?.visibility = View.INVISIBLE
-            emptyNoteView?.visibility = View.VISIBLE
-        }
-        else {
-            val photoAdapter = PhotoAdapter(context!!, photos!!) { interactionListener?.onPhotoClick(it) }
-            photosGridView.adapter = photoAdapter
+        if (photos?.isEmpty() == true)
+            showEmptyNote()
+        else
+            showPhotos(photos!!)
+    }
+
+    private fun showEmptyNote()
+    {
+        photosGridView?.visibility = View.INVISIBLE
+        emptyNoteView?.visibility = View.VISIBLE
+    }
+
+    private fun showPhotos(photos: List<Photo>)
+    {
+        val photoAdapter = PhotoAdapter(context!!, photos, ::onPhotoClick)
+        photosGridView.adapter = photoAdapter
+    }
+
+    private fun onPhotoClick(photo: Photo)
+    {
+        setFullHeightToCurrentImageView()
+        setCurrentImage(photo)
+        animateCurrentImageViewIn()
+    }
+
+    private fun setCurrentImage(photo: Photo)
+    {
+        currentImageView?.post {
+            Picasso.get()
+                .load(photo.url)
+                .error(R.drawable.placeholder).placeholder(R.drawable.placeholder)
+                .fit().centerInside()
+                .into(currentImageView)
         }
     }
 
-
-    interface InteractionListener
+    private fun animateCurrentImageViewIn()
     {
-        fun onPhotoClick(photo: Photo)
+        val height = (view?.height ?: 0).toFloat()
+        ObjectAnimator.ofFloat(currentImageView, "translationY", -height).apply {
+            duration = 500
+            start()
+        }
+        currentImageShowing = true
+    }
+
+    private fun animateCurrentImageViewOut()
+    {
+        val height = (view?.height ?: 0).toFloat()
+        ObjectAnimator.ofFloat(currentImageView, "translationY", height).apply {
+            duration = 500
+            start()
+        }
+        currentImageShowing = false
+    }
+
+    private fun setFullHeightToCurrentImageView()
+    {
+        val height = view?.height ?: 0
+        val params = currentImageView.layoutParams
+        params.height = height
+        currentImageView.layoutParams = params
+    }
+
+    private fun onCurrentPhotoClick()
+    {
+        animateCurrentImageViewOut()
+    }
+
+    override fun handleBackPress(): Boolean
+    {
+        if (currentImageShowing) {
+            onCurrentPhotoClick()
+            return true
+        }
+        return false
     }
 
 
