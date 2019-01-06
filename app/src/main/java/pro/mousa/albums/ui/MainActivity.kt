@@ -4,15 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import pro.mousa.albums.R
 import pro.mousa.albums.data.model.Album
-import pro.mousa.albums.data.model.Photo
 
 
-class MainActivity : BaseActivity(),
-                     AlbumsFragment.InteractionListener,
-                     PhotosFragment.InteractionListener
+class MainActivity : BaseActivity(), AlbumsFragment.InteractionListener
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -49,9 +45,11 @@ class MainActivity : BaseActivity(),
         showPhotosFragment(album)
     }
 
-    override fun onPhotoClick(photo: Photo)
+    override fun onBackPressed()
     {
-        Toast.makeText(this, "Photo [${photo.title}] is clicked!", Toast.LENGTH_SHORT).show()
+        val curFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_holder) as BaseFragment?
+        if (curFragment?.handleBackPress() != true)
+            super.onBackPressed()
     }
 
 

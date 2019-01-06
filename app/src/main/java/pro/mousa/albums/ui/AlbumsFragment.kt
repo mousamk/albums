@@ -50,8 +50,8 @@ class AlbumsFragment : BaseFragment()
     {
         val disposable = dataManager.getAlbums().subscribe(
             { albums: List<Album> ->
-                hideLoading()
                 this@AlbumsFragment.albums = albums
+                hideLoading()
                 if (albums.isEmpty())
                     showEmptyNote()
                 else

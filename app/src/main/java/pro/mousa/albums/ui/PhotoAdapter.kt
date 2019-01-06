@@ -24,14 +24,19 @@ class PhotoAdapter(context: Context,
         val view = oldView ?: inflateView(parent)
         val holder = view.getTag(R.id.tag_viewholder) as PhotoViewHolder
         val photo = photos[position]
+        setImage(holder, photo)
+        holder.nameView.text = photo.title
+        holder.root.setOnClickListener { photoClickHandler(photo) }
+        return view
+    }
+
+    private fun setImage(holder: PhotoViewHolder, photo: Photo)
+    {
         Picasso.get()
             .load(photo.thumbnailUrl)
             .error(R.drawable.placeholder).placeholder(R.drawable.placeholder)
             .fit().centerInside()
             .into(holder.imageView)
-        holder.nameView.text = photo.title
-        holder.root.setOnClickListener { photoClickHandler(photo) }
-        return view
     }
 
     private fun inflateView(parent: ViewGroup?): View

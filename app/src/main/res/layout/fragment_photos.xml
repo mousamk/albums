@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/default_background"
     tools:context=".ui.PhotosFragment">
 
@@ -22,5 +22,15 @@
         android:gravity="center"
         android:textSize="20sp"
         android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/currentImageView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:contentDescription="@null"
+        android:background="@color/default_background"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,6 @@
 package pro.mousa.albums.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import pro.mousa.albums.R
@@ -25,8 +24,7 @@ class SplashActivity : BaseActivity()
             .delay(1000, TimeUnit.MILLISECONDS, schedulerProvider.ui(), true)
             .subscribe(
                 { gotoMainActivity() },
-                { tr ->
-                    Log.e(TAG, "An error happened checking data: ${tr.message}")
+                {
                     if (dataManager.isLocalDataAvailable()) {
                         Toast.makeText(this, "Download problem! Showing offline data.", Toast.LENGTH_LONG).show()
                         gotoMainActivity()
@@ -41,14 +39,7 @@ class SplashActivity : BaseActivity()
 
     private fun gotoMainActivity()
     {
-        Log.d(TAG, "Opening main activity...")
         startActivity(MainActivity.newIntent(this))
         finish()
-    }
-
-
-    companion object
-    {
-        private val TAG: String = SplashActivity::class.java.simpleName
     }
 }
