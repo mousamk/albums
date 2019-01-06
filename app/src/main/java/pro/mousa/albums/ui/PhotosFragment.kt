@@ -75,7 +75,7 @@ class PhotosFragment : BaseFragment()
         currentImageView?.post {
             Picasso.get()
                 .load(photo.url)
-                .error(R.drawable.placeholder).placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
                 .fit().centerInside()
                 .into(currentImageView)
         }
